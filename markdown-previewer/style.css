@@ -1,0 +1,27 @@
+.container {
+  box: border-box;
+  width: 80%;
+  margin: 0 auto;
+  
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.left,
+.right {
+  position: relative;
+  border: 5px solid black;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.left__content,
+.right__content {
+  height: 75%;
+  width: 75%;
+}
+
+.right__content {
+  overflow: scroll;
+}
