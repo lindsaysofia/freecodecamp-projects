@@ -1,0 +1,56 @@
+/*
+Had to quote it out because it was giving me an error due using SCSS.
+
+$white: rgb(252, 252, 252);
+
+body {
+  font-family: sans-serif;
+  transition: background-color 2s, color 2s;
+}
+
+#quote-box {
+  background-color: $white;
+  width: 500px;
+  margin: 0 auto;
+  padding: 50px;
+  position: relative;
+  top: 25vh;
+  text-align: center;
+  display: grid;
+  grid-template-areas: "text text" "author author" "tweet new"
+}
+
+#text {
+  font-size: 2rem;
+  grid-area: text;
+}
+
+#author {
+  opacity: 0.75;
+  grid-area: author;
+}
+
+#new-quote, 
+#tweet-quote {
+  color: $white;
+  font-size: 0.75rem;
+  padding: 5px;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  width: 100px;
+  transition: background-color 2s;
+}
+
+#new-quote {
+  justify-self: end;
+}
+
+#new-quote:hover, 
+#tweet-quote:hover {
+  opacity: 0.75; 
+}
+
+.box {
+  border-radius: 5px;
+} */
