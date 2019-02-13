@@ -1,0 +1,127 @@
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i" rel="stylesheet" />
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<nav id="navbar">
+  <header>Finite Projective Planes and Error Correcting Codes</header>
+  <a class="nav-link" href="#introduction">Introduction</a>
+  <a class="nav-link" href="#projective_planes">Projective Planes</a>
+  <a class="nav-link" href="#error_correcting_code">Error Correcting Code</a>
+  <a class="nav-link" href="#finite_projective_planes_and_error_correcting_code">Finite Projective Planes and Error Correcting Code</a>
+  <a class="nav-link" href="#conclusion">Conclusion</a>
+  <a class="nav-link" href="#sources">Sources</a>
+</nav>
+
+<main id="main-doc">
+  <section id="introduction" class="main-section">
+    <header>Introduction</header>
+    <p>Projective planes were first proposed by Bernhard Reimann with the idea that a projective plane would be a plane with no parallel lines. While at first this concept sounded outright impossible, it is now a field with various interesting applications, one of them in error correcting code.
+</p>
+    <p>Error correcting code is the process of adding redundant bits to a message so that if errors appear in the message after the message has been transmitted or stored, the receiver can acquire the message in its original form, without the errors it may have obtained. While finite projective planes and error correcting code may seem like two vastly distinct topics, they are in fact related and it is this connection that I hope to reveal to the reader.
+</p>
+    <code></code>
+  </section>
+  <section id="projective_planes" class="main-section">
+    <header>Projective Planes</header>
+    <p>For thousands of years, the geometry that was done was Euclid’s geometry. However, a source of contention for many was Euclid’s parallel postulate. Because of this, Reimann suggested that there might in fact be no parallel lines in a plane which is where the idea for projective planes was formed. As we learned throughout various lectures, a projective plane, also known as a “twisted sphere”,  is a surface with no boundary that comes from adding a “line at infinity” to ℝ<sup>2</sup>. In ℝ<sup>2</sup>, all lines except parallel lines intersect in a single point. In contrast, in a projective plane, parallel lines intersect at a “point at infinity”. To review, let us recall that the set of “points” and “lines” in a projective plane must satisfy four axioms:
+</p>
+    <li>(P1) Any two distinct points lie on a unique line.</li>
+    <li>(P2) Any two lines meet at least once.
+</li>
+    <li>(P3) Every line contains at least three points.</li>
+    <li>(P4) There exist three noncollinear points.
+</li>
+    <p>Projective planes can also be given coordinates, which will prove to be useful in revealing the relationship between finite projective planes and error correcting code.</p>
+    <p>One of the most important projective planes is the projective plane ℝℙ<sup>2</sup>. The set of “points” and “lines” of this plane are lines and planes passing through O in ℝ<sup>3</sup>. Many other projective planes can be constructed by following the construction of ℝℙ<sup>2</sup>. One of these is the projective plane F<sup>2</sup>P<sup>2</sup>, commonly referred to as the Fano plane. This projective plane has seven points and seven lines that correspond to the seven nonzero points in F<sub>2</sub><sup>3</sup>:
+</p>
+    <code>
+      <li>(1, 0, 0)</li>
+      <li>(0, 1, 0)</li>
+      <li>(0, 0, 1)</li>
+      <li>(1, 1, 0)</li>
+      <li>(0, 1, 1)</li>
+      <li>(1, 0, 1)</li>
+      <li>(1, 1, 1)</li>
+    </code>
+    <p>These points are combined in triples on the seven lines, where one of these lines is a circle in order to connect the three points 4, 5, and 7.
+</p>
+    <img https://photos.app.goo.gl/4qzWYu4veh5DEzEY7/>
+  </section>
+  <section id="error_correcting_code" class="main-section">
+    <header>Error Correcting Code</header>
+    <p>When messages are encoded and transmitted or stored, there is an obvious motivation to detect any errors that the message may encounter. This is where error detection comes in.
+</p>
+    <p>Originally, error detection occurred through an added parity-check bit. When a message is transmitted, every word has an even number of 1’s. The problem with error detection is that it only establishes whether or not messages contain an error; the computer does not know where the error is nor how to correct it.
+</p>
+    <p>During the late 1940’s, Richard Hamming began working on this problem with one simple idea: if the computer is smart enough to know that an error exists, then the computer can be smart enough to locate the error and correct it rather than just simply acknowledge that there is an error present. This gave rise to the Hamming code, which was the first error correcting code.
+</p>
+    <p>In the Hamming code, every 4-bit message word is encoded into a 7-bit codeword. More precisely, the Hamming code adds three redundancy bits to a 4-bit message to create the 7-bit codeword. Notice that the error detection that was discussed earlier simply added one redundancy bit. The Hamming code makes use of two matrices: the Hamming matrix, <code>H</code>,  and the Generator matrix, <code>G</code>, both shown below:
+</p>
+    <code>H = 
+      <table>
+        <tr>
+          <td>0 1 1 1 1 0 0</td>
+        </tr>
+        <tr>
+          <td>1 0 1 1 0 1 0</td>
+        </tr>
+        <tr>
+          <td>1 1 0 1 0 0 1</td>
+        </tr>
+      </table>
+    </code>
+    <code>G = 
+      <table>
+        <tr>
+          <td>1 0 0 0</td>
+        </tr>
+        <tr>
+          <td>0 1 0 0</td>
+        </tr>
+        <tr>
+          <td>0 0 1 0</td>
+        </tr>
+        <tr>
+          <td>0 0 0 1</td>
+        </tr>
+        <tr>
+          <td>0 1 1 1</td>
+        </tr>
+        <tr>
+          <td>1 0 1 1</td>
+        </tr>
+        <tr>
+          <td>1 1 0 1</td>
+        </tr>
+      </table>
+    </code>
+    <p>In order to use the Hamming code, we begin with one of the sixteen possible binary strings of length four, call this <code>w</code> for “word”. We then encode <code>w</code> by multiplying it on the left by <code>G</code>, and this encoding is our 7-bit codeword, call it <code>c</code>, that will be transmitted. Once the message <code>r</code> is received, an error may exist so let <code>r = c + e</code> where <code>e</code> is the error. In order to figure out where exactly the error occurred, we simply multiply <code>r</code> by <code>H</code>.
+</p>
+  </section>
+  <section id="finite_projective_planes_and_error_correcting_code" class="main-section">
+    <header>Finite Projective Planes and Error Correcting Code</header>
+    <p>Finally, with all the background information that is needed, the relationship between finite projective planes and error correcting code can be established. This connection can be seen between the Hamming matrix and the Fano plane that were discussed earlier.
+</p>
+    <p>The points in the Fano plane are exactly the columns of the Hamming matrix! Moreover, the seven lines of the Fano plane create fourteen of the sixteen possible codewords. For example, the line <code>{1, 7, 3}</code> yields the codeword <code>(1, 0, 1, 0, 0, 0, 1)</code>, which has 1’s in the first position, third position, and seventh position. The remaining two codewords are given by <code>(0, 0, 0, 0, 0, 0, 0)</code> and <code>(1, 1, 1, 1, 1, 1, 1)</code>; therefore we have all sixteen possible codewords.
+</p>
+    <p>Thus, the connection between finite projective planes and error correcting code lies in the relationship between the Fano plane and the Hamming matrix along with the sixteen possible codewords. Interestingly enough, a Hamming code can also be created that corresponds to the finite projective plane of order 3 by following a similar construction to the Hamming code from the Fano plane.
+</p>
+  </section>
+  <section id="conclusion" class="main-section">
+    <header>Conclusion</header>
+    <p>People often view Geometry as nothing more than polygons and angles. However, different aspects of Geometry are present in a variety of other fields. Geometry has come a long way since the days when it was simply used to construct buildings; I doubt Euclid predicted that Geometry would grow so much as to be involved in error correction. Such is the beauty of mathematics. The relationship between finite projective planes and error correcting code is an example of the far-reaching implications of Geometry. Perhaps in the future Geometry will expand into many more fields, but for now it is amazing to see how it relates to error correcting code.</p>
+  </section>
+  <section id="sources" class="main-section">
+    <header>Sources</header>
+    <ol>
+      <li><em>The Four Pillars of Geometry</em> by Stillwell</li>
+      <li><em>Geometry-Euclid and Beyond</em> by Hartshorne</li>
+      <li><a href="http://mathworld.wolfram.com/ProjectivePlane.html" target="_blank">Projective Plane</a></li>
+      <li><a href="https://www.tutorialspoint.com/computer_logical_organization/error_codes.htm" target="_blank">Error Detection and Correction</a></li>
+      <li><a href="http://www.ams.org/publicoutreach/feature-column/fcarc-errors4" target="_blank">Error Correction Codes</a></li>
+      <li><a href="http://micsymposium.org/mics_2009_proceedings/mics2009_submission_52.pdf" target="_blank">Error Correcting Codes and Finite Projective Planes</a></li>
+    </ol>
+  </section>
+</main>
+<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
