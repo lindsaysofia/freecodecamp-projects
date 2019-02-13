@@ -1,0 +1,224 @@
+/* User Story #13: The navbar should always be at the top of the viewport. */
+
+/* User Story #14: My product landing page should have at least one media query. */
+
+/* User Story #15: My product landing page should utilize CSS flexbox at least once. */
+
+/* body styling */
+body {
+  background-color: white;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 16px;
+}
+
+/* header styling */
+header {
+  background-color: white;
+  height: 60px;
+  left: 0vw;
+  position: fixed;
+  right: 0vw;
+  top: 0vh;
+  width: 100%;
+  z-index: 5;
+}
+
+#header-img {
+  height: 60px;
+  width: 85px;
+}
+
+nav {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+}
+
+nav button, nav button a {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 16px;
+  text-decoration: none;
+  width: 150px;
+}
+
+/* content is everything BUT the navbar */
+.content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 100px;
+}
+
+/* form is header, email, and sumbit*/
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form div {
+  margin: 5px;
+}
+
+#email {
+  width: 150px;
+}
+
+/* watermelon styling */
+.sandia-box {
+  height: 60px;
+  width: 60px;
+  position: relative;
+/*   margin: auto;
+  display: block; */
+}
+
+.sandia-top {
+  background-color: red;
+  height: 100%;
+  width: 100%;
+  -webkit-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.sandia-bottom {
+  background-color: green;
+  position: absolute;
+  bottom: 0px;
+  height: 15%;
+  width: 100%;
+}
+
+/* horchata styling */
+.horchata-box {
+  height: 60px;
+  position: relative;
+  width: 60px;
+}
+
+.horchata-straw {
+  background-color: hotpink;
+  height: 100%;
+  left: 50%;
+  position: absolute;
+  width: 5%;
+}
+
+.horchata-outside {
+  border: 1px solid black;
+  bottom: 0px;
+  height: 80%;
+  position: absolute;
+  width: 100%;
+  -webkit-clip-path: polygon(24% 0, 81% 0, 68% 100%, 33% 100%);
+clip-path: polygon(24% 0, 81% 0, 68% 100%, 33% 100%);
+  z-index: 2;
+}
+
+.horchata-inside {
+  background-color: silver;
+  bottom: 0px;
+  height: 80%;
+  position: absolute;
+  width: 100%;
+  -webkit-clip-path: polygon(24% 0, 81% 0, 68% 100%, 33% 100%);
+clip-path: polygon(24% 0, 81% 0, 68% 100%, 33% 100%);
+}
+
+/* pineapple styling */
+.pineapple-box {
+  height: 60px;
+  position: relative;
+  width: 60px;
+}
+
+.pineapple-top {
+  background-color: green;
+  height: 35%;
+  position: absolute;
+  top: 5%;
+  width: 100%;
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  z-index: 1;
+}
+
+.pineapple-bottom {
+  background-color: gold;
+  position: absolute;
+  bottom: 0px;
+  height: 80%;
+  width: 100%;
+  -webkit-clip-path: polygon(49% 0, 73% 20%, 82% 61%, 75% 100%, 25% 100%, 11% 62%, 21% 20%);
+clip-path: polygon(49% 0, 73% 20%, 82% 61%, 75% 100%, 25% 100%, 11% 62%, 21% 20%);
+}
+ 
+.agua-row {
+  display: flex;
+  margin: 40px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.right {
+  margin-left: 40px;
+}
+
+/* video styling */
+#process {
+  height: 315px;
+  width:560px;
+  margin: 50px;
+}
+
+#video {
+  height: 100%;
+  width: 100%;
+}
+
+/* pricing styling */
+#pricing {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+   #pricing {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.pricing-items {
+  align-items: center;
+  background-color: lightyellow;
+  border: 1px solid black;
+  border-radius: 2%;
+  display: flex;
+  flex-direction: column;
+  height: 260px;
+  justify-content: space-around;
+  width: 250px;
+}
+
+#submit, button {
+  background-color: gold;
+  width: 100px;
+}
+
+#submit:hover, .pricing-items button:hover {
+  background-color: orange;
+}
