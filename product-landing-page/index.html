@@ -1,0 +1,115 @@
+<!-- User Story #1: My product landing page should have a header element with a corresponding id="header" -->
+<header id="header">
+  <!-- User Story #3: Within the #header element I can see a nav element with a corresponding id="nav-bar" -->
+  <nav id="nav-bar">
+    <!-- User Story #4: I can see at least three clickable elements inside the nav element, each with the class nav-link. -->
+    <div>
+      <button type="button"><a class="nav-link" href="#aguas">Types of Drinks</a></button>
+      <button type="button"><a class="nav-link" href="#process">Watch a Process</a></button>
+      <button type="button"><a class="nav-link" href="#pricing">Pricing</a></button>
+    </div>
+    <!-- User Story #2: I can see an image within the header element with a corresponding id="header-img". A company logo would make a good image here. -->
+    <div>
+      <img id="header-img" src="http://nebula.wsimg.com/3769719663602f553309a4bd6b1f86be?AccessKeyId=D27E130E73074D9EC2CB&disposition=0&alloworigin=1"/>
+    </div>
+  </nav>
+</header>
+<!-- User Story #7: My landing page has a form element with a corresponding id="form" -->
+<!-- User Story #12: When I click the #submit element, the email is submitted to a static page (use this mock URL: https://www.freecodecamp.com/email-submit) that confirms the email address was entered and that it posted successfully. -->
+<div class="content">
+  <form id="form" action="https://www.freecodecamp.com/email-submit" >
+    <h1>Aguas Frescas</h1>
+    <!-- User Story #8: Within the form, there is an input field with id="email" where I can enter an email address. -->
+    <!-- User Story #9: The #email input field should have placeholder text to let the user know what the field is for. -->
+    <!-- User Story #10: The #email input field uses HTML5 validation to confirm that the entered text is an email address. -->
+    <div>
+      <input id="email" name="email" placeholder="Enter your email address" type="email"/>
+    </div>
+    <!-- User Story #11: Within the form, there is a submit input with a corresponding id="submit".
+   -->
+    <div>
+      <input id="submit" type="submit" value="Get Started"/>
+    </div>
+  </form>
+    
+
+  <!-- User Story #5: When I click a .nav-link button in the nav element, I am taken to the corresponding section of the landing page. -->
+  <div id="aguas">
+    <div class="agua-row">
+      <!-- Watermelon section -->
+      <div class="left">
+        <!-- Watermelon symbol -->
+        <div class="sandia-box">
+          <div class="sandia-top">
+            <div class="sandia-bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <h2>Agua de Sandia</h2>
+        <p>Taste the sweetness of watermelon in a refreshing drink. Perfect for hot Summer days.</p>
+      </div>
+    </div>
+
+    <!-- Horchata section -->
+    <div class="agua-row">
+      <div class="left">
+        <!-- Horchata symbol -->
+        <div class="horchata-box">
+          <div class="horchata-straw"></div>
+          <div class="horchata-outside">
+            <div class="horchata-inside"></div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <h2>Agua de Horchata</h2>
+        <p>This rice milk drink is the perfect amount of sweet. Pairs well with tacos!</p>
+     </div>
+    </div>
+
+    <!-- Pineapple section -->
+    <div class="agua-row">
+      <div class="left">
+        <!-- Pineapple symbol -->
+        <div class="pineapple-box">
+          <div class="pineapple-top"></div>
+          <div class="pineapple-bottom"></div>
+        </div>
+      </div>
+      <div class="right">
+        <h2>Agua de Piña</h2>
+        <p>Pineapple juice that will leave you wanting more. Enjoy at your own risk.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="process">
+    <!-- User Story #6: I can watch an embedded product video with id="video". -->
+    <iframe id="video" src="https://www.youtube.com/embed/ipSqE0wNS_0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+
+  <div id="pricing">
+    <div class="pricing-items">
+      <h2>Single Agua Fresca</h2>
+      <p>Enjoy an agua fresca of your choice!</p>
+      <p>$1.00</p>
+      <button type="button">Select</button>
+    </div>
+
+    <div class="pricing-items">
+      <h2>Two Aguas Fresca</h2>
+      <p>Share an agua fresca with a friend!</p>
+      <p>$2.00</p>
+      <button type="button">Select</button>
+    </div>
+
+    <div class="pricing-items">
+      <h2>Party Pack</h2>
+      <p>Serves a group of 10!</p>
+      <p>$10.00</p>
+      <button type="button">Select</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
