@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <h1 id="title">Survey Form</h1>
+    
+    <div class="outer-form">
+      
+      <!-- The form itself -->
+      <form id="survey-form">
+        
+        <p id="description">Let us know how much you love soccer!</p>
+        
+        <!-- Name -->
+        <div class="survey-row">
+          <div class="left">
+            <label id="name-label" for="name">* Name: </label>
+          </div>
+          <div class="right">
+            <input id="name" placeholder="Enter your name" type="text" class="text-box" required/>
+          </div>
+        </div>
+        
+        <!-- Email -->
+        <div class="survey-row">
+          <div class="left">
+            <label id="email-label" for="email">* Email: </label>
+          </div>
+          <div class="right">
+            <input id="email" placeholder="Enter your email" type="email" class="text-box" required />
+          </div>
+        </div>
+        
+        <!-- Age -->
+        <div class="survey-row">
+          <div class="left">
+            <label id="number-label" for="number">* Age: </label>
+          </div>
+          <div class="right">
+            <input id="number" min="1" max="100" placeholder="Enter your age" type="number" class="text-box" required />
+          </div>
+        </div>
+        
+        <!-- User's current role -->
+        <div class="survey-row">
+          <div class="left">
+            <label for="dropdown">Which option best describes your position on the field?</label>
+          </div>
+          <div class="right">
+            <select id="dropdown" class="left">
+              <option selected disabled>Select an Option</option>
+              <option value="keeper">Goalkeeper</option>
+              <option value="defender">Defender</option>
+              <option value="midfield">Midfield</option>
+              <option value="forward">Forward</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- User's recommendation -->
+        <div class="survey-row">
+          <div class="left">
+            <label>* How likely is that you would encourage a friend to play soccer?</label>
+          </div>
+          <div class="right">
+            <ul>
+              <li>
+                <input id="definitely" name="recommend" value="definitely" type="radio" required/> 
+                <label for="definitely"> Definitely</label>
+              </li>
+              <li>
+                <input id="maybe" name="recommend" value="maybe" type="radio" required/>
+                <label for="maybe"> Maybe</label>
+              </li>
+              <li>
+                <input id="not-sure" name="recommend" value="not-sure" type="radio" required/>
+                <label for="not-sure"> Not Sure</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- User's favorite feature -->
+        <div class="survey-row">
+          <div class="left">
+            <label for="like-most">What do you like most about soccer?:</label>
+          </div>
+          <div class="right">
+            <select id="like-most">
+              <option selected disabled>Select an Option</option>
+              <option value="challenges">Blocking the Opponent's Attempts on Your Goal</option>
+              <option value="community">Making Assists</option>
+              <option value="projects">Scoring</option>
+              <option value="open-source">Working With Your Teammates</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Things that need improvement -->
+        <div class="survey-row">
+          <div class="left">
+            <label>How do you train for soccer? (Check all that apply)</label>
+          </div>
+          <div class="right">
+            <ul>
+              <li>
+                <input name="improve" id="run" value="run" type="checkbox"/>
+                <label for="run"> Running</label> 
+              </li>
+              <li>
+                <input name="improve" id="weights" value="weights" type="checkbox"/>
+                <label for="weights"> Weight Training</label>
+              </li>
+              <li>
+                <input name="improve" id="dribbling" value="dribbling" type="checkbox"/>
+                <label for="dribbling"> Dribbling</label>
+              </li>
+              <li>
+                <input name="improve" id="shots" value="shots" type="checkbox"/>
+                <label for="shots"> Shots on Goal</label>
+              </li>
+              <li>
+                <input name="improve" id="touch" value="touch" type="checkbox"/>
+                <label for="touch"> Touch-squares</label>
+              </li>
+              <li>
+                <input name="improve" id="pair" value="pair" type="checkbox"/>
+                <label for="pair"> Pair passes</label>
+              </li>
+              <li>
+                <input name="improve" id="informal" value="informal" type="checkbox"/>
+                <label for="informal"> Informal games</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Comments and Suggestions -->
+        <div class="survey-row">
+          <div class="left">
+            <label for="comments">Any Comments or Suggestions?</label>
+          </div>
+          <div class="right">
+            <textarea id="comments" placeholder="Enter your comments"></textarea>
+          </div>
+        </div>
+        <div>
+          <button id="submit" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  </body>
+</html>
