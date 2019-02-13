@@ -1,0 +1,65 @@
+body {
+  color: hsl(105, 5%, 30%);
+  display: grid;
+  grid-template-areas: "navigation content";
+  grid-template-columns: 1fr 3fr;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.75rem;
+}
+
+
+nav {
+  border-right: solid;
+  display: flex;
+  flex-direction: column;
+  grid-area: navigation;
+}
+
+#navbar header{
+  padding-left: 5%;
+}
+
+.nav-link {
+  border-top: solid;
+  margin: 5%;
+  padding-top: 7%;
+}
+
+header {
+  color: black;
+  font-size: 1.5rem;
+}
+
+a {
+  color: hsl(105, 5%, 30%);
+  text-decoration: none;
+}
+
+main {
+  grid-area: content;
+  padding-left: 2%;
+}
+
+#projective_planes li {
+  list-style: none;
+}
+
+table {
+  border-left: solid;
+  border-right: solid;
+  border-radius: 15%;
+}
+
+#sources a {
+  color: teal;
+}
+
+@media only screen and (max-width: 500px) {
+  nav {
+    display: none;
+  }
+  
+  body {
+   grid-template-areas: "content content";
+  }
+}
