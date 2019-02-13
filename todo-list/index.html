@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+  <head> <!-- Gives browser info about the document, not visually displayed on the page -->
+    <link rel="stylesheet" href="style.css" type="text/css">
+    
+  </head>
+
+  <body> <!-- Visually displayed on the page -->
+    <header>
+      <h1>Todo List</h1>
+    </header>
+    
+    <div class="interactive">
+      <div class="todo-feature">
+        <button onclick="handlers.toggleAll()">Toggle All</button>
+      </div>
+
+
+      <div class="todo-feature">
+        <button onclick="handlers.addTodo()">Add</button>
+        <input id="addTodoTextInput" type="text">
+      </div>
+
+      <div class="todo-feature">
+        <button onclick="handlers.changeTodo()">Change Todo</button>
+        <input id="changeTodoPositionInput" type="number">
+        <input id="changeTodoTextInput" type="text">
+      </div>
+
+      <div class="todo-feature">
+        <button onclick="handlers.toggleCompleted()">Toggle Completed</button>
+        <input id="toggleCompletedPositionInput" type="number">
+      </div>
+
+      <ul class="todo-feature">
+      </ul>
+    </div>
+    
+    <script src="script.js"></script>
+  </body>
+
+</html>
