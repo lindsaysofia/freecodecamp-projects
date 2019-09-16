@@ -1,0 +1,48 @@
+body {
+  background: url('https://i.pinimg.com/originals/85/5d/c4/855dc403ad0cfca630b0eb852aef56a1.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
+}
+
+form, .inner-fieldset {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
+div.right {
+  display: grid;
+  grid-template-columns: 30% 70%;
+}
+
+.left {
+  justify-self: end;
+}
+
+.right {
+  justify-self: start;
+}
+
+#title, #description {
+  text-align: center;
+}
+
+fieldset {
+  border: none;
+}
+
+.costume-fieldset {
+  grid-area: 5 / 1 / 6 / 3;
+}
+
+.candy-fieldset {
+  grid-area: 6 / 1 / 7 / 3;
+}
+
+#submit {
+  grid-area: 8 / 1 / 9 / 3;
+  justify-self: center;
+}
+
