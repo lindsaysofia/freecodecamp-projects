@@ -1,9 +1,15 @@
 body {
-  background: url('https://i.pinimg.com/originals/85/5d/c4/855dc403ad0cfca630b0eb852aef56a1.png');
+  background: url('https://i.pinimg.com/originals/53/b7/0b/53b70b3f84fd5358bcf5335d6141d224.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-color: black;
+  color: white;
+  font-family: Acme, sans-serif;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 form, .inner-fieldset {
@@ -17,8 +23,21 @@ div.right {
   grid-template-columns: 30% 70%;
 }
 
+#title {
+  font-family: 'Creepster', cursive, sans-serif;
+  font-size: 50px;
+}
+
+form {
+  background-color: rgba(255, 255, 255, 0.1);
+  height: 700px;
+  width: 55%;
+  padding: 20px;
+}
+
 .left {
   justify-self: end;
+  text-align: right;
 }
 
 .right {
@@ -27,6 +46,17 @@ div.right {
 
 #title, #description {
   text-align: center;
+}
+
+input[type="text"], 
+input[type="email"],
+input[type="number"] {
+  width: 50%;
+  height: 30px;
+}
+
+textarea {
+  width: 50%;
 }
 
 fieldset {
@@ -44,5 +74,15 @@ fieldset {
 #submit {
   grid-area: 8 / 1 / 9 / 3;
   justify-self: center;
+  border: none;
+  background-color: hsl(26, 90%, 40%);
+  color: white;
+  border-radius: 5%;
+  width: 40
+
+}
+
+#submit:hover {
+  background-color: hsl(26, 90%, 60%);
 }
 

@@ -5,15 +5,28 @@
     <link href="https://fonts.googleapis.com/css?family=Acme|Creepster&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- Main header -->
     <h1 id="title">Halloween</h1>
+
+    <!-- Description -->
     <p id="description">Let's get spooky!</p>
+
+    <!-- Survey form -->
     <form id="survey-form">
+      
+      <!-- Name -->
       <label class="left" id="name-label" for="name">Name:</label>
       <input class="right" id="name" type="text" placeholder="Please enter your name" required />
+
+      <!-- Email -->
       <label class="left" id="email-label" for="email">Email:</label>
       <input class="right" id="email" type="email" placeholder="Please enter your email" required />
+
+      <!-- Number -->
       <label class="left" id="number-label" for="number">Age:</label>
       <input class="right" id="number" type="number" placeholder="Please enter your age" min="0" max="100" required />
+
+      <!-- Select favorite thing about Halloween (option) -->
       <label class="left" for="dropdown">What's your favorite thing about Halloween?</label>
       <select class="right" id="dropdown" name="dropdown">
         <option value="select-an-option" disabled>Select an Option</option>
@@ -22,6 +35,8 @@
         <option value="decorations" selected>Decorations</option>
         <option value="other">Other</option>
       </select>
+
+      <!-- Choose one costume (radio) -->
       <fieldset class="costume-fieldset">
         <div class="inner-fieldset">
           <legend class="left">If you could pick one costume, what would you be?</legend>
@@ -32,10 +47,11 @@
             <label for="ghost">Ghost</label>
             <input id="scarecrow" value="scarecrow" type="radio" name="radio"/>
             <label for="scarecrow">Scarecrow</label>
-            
           </div>
         </div>
       </fieldset>
+
+      <!-- Choose multiple candies (checkbox) -->
       <fieldset class="candy-fieldset">
         <div class="inner-fieldset">
           <legend class="left">What candy would you like to get?</legend>
@@ -49,8 +65,12 @@
           </div>
         </div>
       </fieldset>
+
+      <!-- Textarea for additonal comments -->
       <label class="left" for="textarea">Please tell us any other thoughts you have about Halloween:</label>
       <textarea class="right" id="textarea" name="textarea"></textarea>
+
+      <!-- Submit -->
       <button id="submit" value="submit">Submit</button>
     </form>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
