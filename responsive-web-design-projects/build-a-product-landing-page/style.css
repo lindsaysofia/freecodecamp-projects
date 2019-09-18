@@ -1,0 +1,111 @@
+body {
+  font-family: Roboto, sans-serif;
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+  align-items: center;
+}
+
+#header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  z-index: 1;
+  justify-content: space-between;
+  background-color: white;
+}
+
+#nav-bar {
+  width: 35%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#header-img {
+  display: block;
+  width: 70px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: hsl(360, 94%, 25%);
+}
+
+.nav-link:hover {
+  color: hsl(360, 94%, 40%);
+}
+
+main {
+  margin: 100px;
+}
+
+#form {
+  height: 50px;
+  justify-content: space-between;
+}
+
+input[type="submit"] {
+  border: none;
+  border-radius: 5%;
+  height: 25px;
+  width: 90px;
+  color: white;
+  background-color: hsl(360, 94%, 25%);
+}
+
+input[type="submit"]:hover {
+  background-color: hsl(360, 94%, 40%);
+}
+
+.services-container {
+  justify-content: space-evenly;
+}
+
+.service {
+  width: 20%;
+  border-radius: 5%;
+  padding: 10px;
+  margin: 20px;
+  background-color: hsl(360, 94%, 25%);
+  color: white;
+}
+
+.service:hover {
+  background-color: hsl(360, 94%, 40%);
+}
+
+.text-align-justify {
+  text-align: justify;
+}
+
+#about p {
+  width: 70%;
+}
+
+#contact p {
+  color: hsl(360, 94%, 25%);
+}
+
+footer {
+  color: hsl(360, 94%, 25%);
+  text-align: left;
+}
+
+ @media (max-width: 750px){
+   .services-container {
+     flex-direction: column;
+     align-items: center;
+   }
+   
+   .service {
+     width: 60%;
+   }
+}
