@@ -46,10 +46,16 @@ code {
   body {
     margin: 0px;
   }
+  
   nav {
     position: static;
     width: 100%;
-    padding: 20px;
+    height: auto;
+    align-items: flex-start;
+  }
+  
+  .nav-link {
+    display: none;
   }
   
   main {
