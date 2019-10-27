@@ -58,5 +58,3 @@ function telephoneCheck(str) {
   let telephoneRegex = /^(1|1 |)(\([0-9]{3}\)|[0-9]{3})( |\-|)[0-9]{3}( |\-|)[0-9]{4}$/;
   return telephoneRegex.test(str);
 }
-
-console.log(telephoneCheck("(555)5(55?)-5555"));
