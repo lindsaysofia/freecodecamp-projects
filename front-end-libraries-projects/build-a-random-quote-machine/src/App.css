@@ -1,22 +1,54 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 26px;
+  text-align: center;
+  transition: background-color 2s;
 }
 
-.App-link {
-  color: #09d3ac;
+#quote-box {
+  background-color: whitesmoke;
+  width: 550px;
+  padding: 2%;
+  border-radius: 1%;
+}
+
+#author,
+#text {
+  transition: color 2s;
+}
+
+.clickable-elements {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+#tweet-quote,
+#new-quote {
+  color: whitesmoke;
+  width: 115px;
+  height: 30px;
+  text-decoration: none;
+  font-family: '=Roboto', sans-serif;
+  font-size: 16px;
+  border-radius: 7%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 2s,
+}
+
+#new-quote:focus {
+  outline: 0;
+}
+
+#tweet-quote:hover,
+#new-quote:hover {
+  opacity: 0.8;
 }
