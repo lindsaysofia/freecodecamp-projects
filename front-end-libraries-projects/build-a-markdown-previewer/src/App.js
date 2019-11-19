@@ -1,7 +1,11 @@
 import React from 'react';
+import logo from './logo.svg';
 import './App.css';
+import marked from 'marked';
 
-const initialInput = `# Change this Markdown Previewer! This is an h1.
+const initialInput = `Change this Markdown Previewer! 
+========================
+# This is an h1.
 ## This is an h2.
 ### This is an h3. Etc.
 
@@ -36,7 +40,7 @@ We can also make
 5. Wow! So many options!
 
 You can also insert a cool image:
-![Like my FAVORITE library at Cal :)](https://news.berkeley.edu/wp-content/uploads/2019/02/APA_31-1.jpg)
+![This is my FAVORITE library at Cal :)](https://news.berkeley.edu/wp-content/uploads/2019/02/APA_31-1.jpg)
 
 `;
 
