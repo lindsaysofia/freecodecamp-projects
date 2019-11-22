@@ -10,11 +10,24 @@ import pig from './pig.mp3';
 import rattlesnake from './rattlesnake.mp3';
 import seal from './seal.mp3';
 
+const INFO = {
+  'Q': {description: 'cheetah', source: cheetah},
+  'W': {description: 'coyote', source: coyote},
+  'E': {description: 'dog', source: dog},
+  'A': {description: 'elephant', source: elephant},
+  'S': {description: 'lion', source: lion},
+  'D': {description: 'monkey', source: monkey},
+  'Z': {description: 'pig', source: pig},
+  'X': {description: 'rattlesnake', source: rattlesnake},
+  'C': {description: 'seal', source: seal},
+};
+
 function DrumPad(props) {
   return (
-    <div className="drum-pad" id={props.description} onClick={props.handleClick}>
+    // Need to add arrow funtion to avoid passing in the event
+    <div className="drum-pad" id={INFO[props.shortcutKey].description} onClick={() => props.handleClick(props.shortcutKey)}>
       <p>{props.shortcutKey}</p>
-      <audio id={props.shortcutKey} className="clip" src={cheetah}>hey</audio>
+      <audio id={props.shortcutKey} className="clip" src={INFO[props.shortcutKey].source}></audio>
     </div>
   );
 }
@@ -25,9 +38,11 @@ class App extends React.Component {
     this.state = {};
   }
 
-  handleClick() {
-    let audioElement = document.getElementById("Q");
-    audioElement.play();
+  handleClick(shortcutKey) {
+    let allAudioElements = document.getElementsByTagName('audio');
+    Array.from(allAudioElements).forEach(audioElement => audioElement.pause());
+    let targetAudioElement = document.getElementById(shortcutKey);
+    targetAudioElement.play();
   }
   
   render() {
@@ -35,15 +50,15 @@ class App extends React.Component {
       <div id="drum-machine">
         <p id="display"></p>
         <div class="drum-pads-container">
-          <DrumPad handleClick={this.handleClick} description="cheetah" shortcutKey="Q"/>
-          {/* <DrumPad key="W"/>
-          <DrumPad key="E"/>
-          <DrumPad key="A"/>
-          <DrumPad key="S"/>
-          <DrumPad key="D"/>
-          <DrumPad key="Z"/>
-          <DrumPad key="X"/>
-          <DrumPad key="C"/> */}
+          <DrumPad handleClick={this.handleClick} shortcutKey="Q" />
+          <DrumPad handleClick={this.handleClick} shortcutKey="W" />
+          <DrumPad handleClick={this.handleClick} shortcutKey="E" />
+          <DrumPad handleClick={this.handleClick} shortcutKey="A" />
+          <DrumPad handleClick={this.handleClick} shortcutKey="S" />
+          <DrumPad handleClick={this.handleClick} shortcutKey="D" />
+          <DrumPad handleClick={this.handleClick} shortcutKey="Z" />
+          <DrumPad handleClick={this.handleClick} shortcutKey="X" />
+          <DrumPad handleClick={this.handleClick} shortcutKey="C" />
         </div>
       </div>
     );
