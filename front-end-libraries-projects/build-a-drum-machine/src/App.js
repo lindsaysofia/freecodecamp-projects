@@ -26,8 +26,8 @@ const INFO = {
 function DrumPad(props) {
   return (
     // Need to add arrow funtion to avoid passing in the event
-    <div className="drum-pad" id={INFO[props.shortcutKey].description} onClick={() => props.handleClick(props.shortcutKey)} >
-      <p>{props.shortcutKey}</p>
+    <div className="drum-pad" id={INFO[props.shortcutKey].description} onClick={() => props.handleClick(props.shortcutKey)}>
+      {props.shortcutKey}
       <audio id={props.shortcutKey} className="clip" src={INFO[props.shortcutKey].source}></audio>
     </div>
   );
@@ -52,11 +52,9 @@ class App extends React.Component {
 
   handleClick(shortcutKey) {
     let allAudioElements = document.getElementsByTagName('audio');
-    Array.from(allAudioElements).forEach(audioElement => {
-      // audioElement.currentTime = 0;
-      audioElement.pause();
-    });
+    Array.from(allAudioElements).forEach(audioElement => audioElement.pause());
     let targetAudioElement = document.getElementById(shortcutKey);
+    // targetAudioElement.currentTime = 0; For some reason tests don't pass with this...
     targetAudioElement.play();
     this.setState({
       display: INFO[shortcutKey].description
@@ -73,7 +71,7 @@ class App extends React.Component {
   render() {
     return (
       <div id="drum-machine">
-  <p id="display">{this.state.display}</p>
+        <p id="display">{this.state.display}</p>
         <div class="drum-pads-container">
           <DrumPad handleClick={this.handleClick} shortcutKey="Q" />
           <DrumPad handleClick={this.handleClick} shortcutKey="W" />
