@@ -35,8 +35,11 @@ function DrumPad(props) {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      display: 'Play Something!'
+    };
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   
   handleKeyPress(event) {
@@ -51,19 +54,22 @@ class App extends React.Component {
     Array.from(allAudioElements).forEach(audioElement => audioElement.pause());
     let targetAudioElement = document.getElementById(shortcutKey);
     targetAudioElement.play();
+    this.setState({
+      display: INFO[shortcutKey].description
+    });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress, false);
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyPress, false);
   }
   
   render() {
     return (
       <div id="drum-machine">
-        <p id="display"></p>
+  <p id="display">{this.state.display}</p>
         <div class="drum-pads-container">
           <DrumPad handleClick={this.handleClick} shortcutKey="Q" />
           <DrumPad handleClick={this.handleClick} shortcutKey="W" />
