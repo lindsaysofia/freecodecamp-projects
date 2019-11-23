@@ -1,3 +1,4 @@
+// Sounds from https://www.freesoundeffects.com/
 import React from 'react';
 import './App.css';
 import cheetah from './cheetah.mp3';
@@ -11,15 +12,15 @@ import rattlesnake from './rattlesnake.mp3';
 import seal from './seal.mp3';
 
 const INFO = {
-  'Q': {description: 'cheetah', source: cheetah, code: 81},
-  'W': {description: 'coyote', source: coyote, code: 87},
-  'E': {description: 'dog', source: dog, code: 69},
-  'A': {description: 'elephant', source: elephant, code: 65},
-  'S': {description: 'lion', source: lion, code: 83},
-  'D': {description: 'monkey', source: monkey, code: 68},
-  'Z': {description: 'pig', source: pig, code: 90},
-  'X': {description: 'rattlesnake', source: rattlesnake, code: 88},
-  'C': {description: 'seal', source: seal, code: 67},
+  'Q': {description: 'cheetah', source: cheetah},
+  'W': {description: 'coyote', source: coyote},
+  'E': {description: 'dog', source: dog},
+  'A': {description: 'elephant', source: elephant},
+  'S': {description: 'lion', source: lion},
+  'D': {description: 'monkey', source: monkey},
+  'Z': {description: 'pig', source: pig},
+  'X': {description: 'rattlesnake', source: rattlesnake},
+  'C': {description: 'seal', source: seal}
 };
 
 function DrumPad(props) {
@@ -36,7 +37,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      display: 'Play Something!'
+      display: 'Press a key or click a button!'
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -51,7 +52,10 @@ class App extends React.Component {
 
   handleClick(shortcutKey) {
     let allAudioElements = document.getElementsByTagName('audio');
-    Array.from(allAudioElements).forEach(audioElement => audioElement.pause());
+    Array.from(allAudioElements).forEach(audioElement => {
+      // audioElement.currentTime = 0;
+      audioElement.pause();
+    });
     let targetAudioElement = document.getElementById(shortcutKey);
     targetAudioElement.play();
     this.setState({
