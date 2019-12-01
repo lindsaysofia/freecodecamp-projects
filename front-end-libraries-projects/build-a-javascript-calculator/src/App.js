@@ -17,6 +17,7 @@ class App extends React.Component {
     this.handleOperator = this.handleOperator.bind(this);
     this.handleEquals = this.handleEquals.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleKeyPress= this.handleKeyPress.bind(this);
   }
 
   handleInput(event) {
@@ -43,7 +44,7 @@ class App extends React.Component {
     if (equation.includes('=')) {
       equation = this.state.equation.match(INPUT_REGEX)[0] + clickedOperator;
     } else if (currentOperator === null) {
-      equation = equation + clickedOperator;
+      equation = (equation + clickedOperator).replace(/^0*([-\+\*\/])/, '$1');
     } else if (currentOperator[0].length === 2) {
       if (MINUS_COMPATIBLE_REGEX.test(clickedOperator)) {
         equation = equation.replace(OPERATOR_REGEX, clickedOperator);
@@ -60,11 +61,13 @@ class App extends React.Component {
   }
 
   handleEquals() {
-    let equation = this.state.equation.replace(/^[\D\.]+|[/D\.]+$/g, '');
-    let result = eval(equation).toString();
+    let equation = this.state.equation.replace(/^[\D\.]+|[\D\.]+$/g, '');
+    let result = eval(equation);
+    result = (result === undefined) ? '' : result.toString();
+    equation = (result === '') ? '' : `${equation}=${result}`;
     this.setState({
       input: result,
-      equation: `${equation}=${result}`
+      equation
     })
   }
 
@@ -73,6 +76,50 @@ class App extends React.Component {
       input: '0',
       equation: '0'
     });
+  }
+
+  handleKeyPress(event) {
+    let keyPressed = event.key;
+    console.log(keyPressed);
+    switch(keyPressed) {
+      case '=':
+        this.handleEquals();
+        break;
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+      case '.':
+        this.handleInput({target: {innerText: keyPressed}});
+        break;
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        this.handleOperator({target: {innerText: keyPressed}});
+        break;
+      case 'Backspace':
+        this.handleClear();
+        break;
+      case 'Enter':
+        this.handleEquals();
+        break;
+      default:
+        break;
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyPress, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress, false);
   }
 
   render() {
@@ -95,8 +142,8 @@ class App extends React.Component {
         <button id="divide" onClick={this.handleOperator}>/</button>
         <button id="decimal" onClick={this.handleInput}>.</button>
         <button id="clear" onClick={this.handleClear}>AC</button>
-    <p id="equation-display">equation: {this.state.equation}</p>
-    <p id="display">{this.state.input}</p>
+        <p id="equation-display">equation: {this.state.equation}</p>
+        <p id="display">{this.state.input}</p>
       </div>
     );
   }
