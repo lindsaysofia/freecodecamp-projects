@@ -4,6 +4,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Atomic Age', cursive;
+  font-size: 24px;
 }
 
 .calculator {
@@ -17,14 +19,34 @@ body {
                        'zero zero decimal equals';
   width: 400px;
   height: 600px;
+  box-shadow: 0 0 30px 1px black;
+}
+
+button {
+  font-family: 'Atomic Age', cursive;
+  font-size: 24px;
+  color: pink;
+  background-color: black;
+}
+
+button:focus {
+  outline: none;
 }
 
 #equation-display {
   grid-area: equation;
+  font-size: 20px;
 }
 
 #display {
   grid-area: display;
+}
+
+#equation-display,
+#display {
+  text-align: right;
+  background-color: pink;
+  margin: 0;
 }
 
 #clear {
