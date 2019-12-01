@@ -142,7 +142,7 @@ class App extends React.Component {
         <button id="divide" onClick={this.handleOperator}>/</button>
         <button id="decimal" onClick={this.handleInput}>.</button>
         <button id="clear" onClick={this.handleClear}>AC</button>
-        <p id="equation-display">equation: {this.state.equation}</p>
+        <p id="equation-display">{this.state.equation}</p>
         <p id="display">{this.state.input}</p>
       </div>
     );
