@@ -61,7 +61,7 @@ class App extends React.Component {
 
   handleEquals() {
     let equation = this.state.equation.replace(/^[\D\.]+|[/D\.]+$/g, '');
-    let result = eval(equation);
+    let result = eval(equation).toString();
     this.setState({
       input: result,
       equation: `${equation}=${result}`
@@ -96,7 +96,7 @@ class App extends React.Component {
         <button id="decimal" onClick={this.handleInput}>.</button>
         <button id="clear" onClick={this.handleClear}>AC</button>
     <p id="equation-display">equation: {this.state.equation}</p>
-    <p id="display">input: {this.state.input}</p>
+    <p id="display">{this.state.input}</p>
       </div>
     );
   }
