@@ -1,0 +1,58 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Overpass', sans-serif;
+  box-sizing: border-box;
+}
+
+.App {
+  display: grid;
+  grid-template-rows: 75px 150px 50px 75px;
+  grid-template-columns: 350px 350px;
+  grid-template-areas: "header header"
+                       "break session"
+                       "timer timer"
+                       "start-stop reset";
+  justify-items: center;
+  align-items: center;
+  /* min-width: 450px;
+  min-height: 350px; */
+}
+
+h1 {
+  margin: 0;
+  grid-area: header;
+}
+
+#break-label,
+#session-label {
+  margin: 0;
+}
+
+.timer-container {
+  grid-area: timer;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.click {
+  font-size: 30px;
+}
+
+#reset {
+  font-size: 45px;
+}
+
+.click:hover {
+  cursor: pointer;
+}
