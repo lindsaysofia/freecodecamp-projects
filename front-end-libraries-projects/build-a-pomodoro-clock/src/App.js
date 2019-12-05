@@ -10,9 +10,11 @@ function Interactive(props) {
   return (
     <div className="interactive-container">
       <p id={`${props.type}-label`}>{`${props.type} length`}</p>
-      <p id={`${props.type}-decrement`} onClick={props.handleDecrementIncrement}>&darr;</p>
-      <p id={`${props.type}-length`}>{props.length}</p>
-  <p id={`${props.type}-increment`} onClick={props.handleDecrementIncrement}>&uarr;</p>
+      <div className="flex">
+        <p id={`${props.type}-decrement`} className="click" onClick={props.handleDecrementIncrement}>&darr;</p>
+        <p id={`${props.type}-length`}>{props.length}</p>
+        <p id={`${props.type}-increment`} className="click" onClick={props.handleDecrementIncrement}>&uarr;</p>
+      </div>
     </div>
   );
 }
@@ -149,8 +151,8 @@ class App extends React.Component {
         <Interactive type="break" length={this.state.breakLength} handleDecrementIncrement={this.handleDecrementIncrement}/>
         <Interactive type="session" length={this.state.sessionLength} handleDecrementIncrement={this.handleDecrementIncrement}/>
         <Timer type={this.state.type} timer={this.state.timer}/>
-        <p id="start_stop" onClick={this.handleStartStop}>{(this.state.paused) ? PLAY : PAUSE}</p>
-        <p id="reset" onClick={this.handleReset}>{RESET}</p>
+        <p id="start_stop" className="click" onClick={this.handleStartStop}>{(this.state.paused) ? PLAY : PAUSE}</p>
+        <p id="reset" className="click" onClick={this.handleReset}>{RESET}</p>
         <audio id="beep" src={harpStrumming}></audio>
       </div>
     );
