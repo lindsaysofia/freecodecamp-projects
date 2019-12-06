@@ -3,7 +3,7 @@ import './App.css';
 import harpStrumming from './harp-strumming.mp3';
 
 const PLAY = '\u25B6';
-const PAUSE= '||';
+const PAUSE= 'II';
 const RESET = '\u21BA';
 
 function Interactive(props) {
