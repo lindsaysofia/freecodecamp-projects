@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src = "https://d3js.org/d3.v4.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('root').innerHTML = JSON.stringify(data);
+      });
+    </script>
+  </body>
+</html>
