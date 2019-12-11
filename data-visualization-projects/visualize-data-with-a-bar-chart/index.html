@@ -2,15 +2,48 @@
 <html lang="en">
   <head>
     <script src = "https://d3js.org/d3.v4.min.js"></script>
+    <style>
+      .bar {
+        width: 25px;
+        height: 100px;
+        display: inline-block;
+        background-color: blue;
+        margin: 2px;
+      }
+
+      .bar:hover {
+        fill: brown;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
     <script>
       fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
       .then(response => response.json())
       .then(data => {
-        document.getElementById('root').innerHTML = JSON.stringify(data);
+        const w = 500;
+        const h = 150;
+
+        const scale = d3.scaleLinear(); // create scale
+        scale.domain([data.data[0][1], data.data[data.data.length - 1][1]])
+
+        const svg = d3.select('body')
+                      .append('svg')
+                      .attr('height', h)
+
+        svg.selectAll('rect')
+           .data(data.data)
+           .enter()
+           .append('rect')
+           .attr('x', (d, i) => 30 * i)
+           .attr('y', (d, i) => h - 3 * d)
+           .attr('height', (d, i) => 3 * d)
+           .attr('width', 25)
+           .attr('class', 'bar')
+           .append('title')
+           .text(d => d)
       });
     </script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
   </body>
 </html>
