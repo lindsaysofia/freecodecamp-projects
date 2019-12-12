@@ -21,27 +21,50 @@
       fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
       .then(response => response.json())
       .then(data => {
-        const w = 500;
-        const h = 150;
+        const w = 900;
+        const h = 600;
+        const padding = 60;
+        const c = 30;
+      
+        const xScale = d3.scaleTime()
+                         .domain([1947, 2015])
+                         .range([padding, w - padding]);
 
-        const scale = d3.scaleLinear(); // create scale
-        scale.domain([data.data[0][1], data.data[data.data.length - 1][1]])
+        const yScale = d3.scaleTime()
+                         .domain([data.data[0][1], data.data[data.data.length - 1][1]])
+                         .range([h - padding, padding]);
 
         const svg = d3.select('body')
                       .append('svg')
-                      .attr('height', h)
+                      .attr('width', w)
+                      .attr('height', h);
 
         svg.selectAll('rect')
            .data(data.data)
            .enter()
            .append('rect')
-           .attr('x', (d, i) => 30 * i)
-           .attr('y', (d, i) => h - 3 * d)
-           .attr('height', (d, i) => 3 * d)
-           .attr('width', 25)
+           .attr('x', (d, i) => {
+             let date = d[0].split('-');
+           })
+           .attr('y', (d, i) => h - d[1])
+           .attr('height', (d, i) => c * d[1])
+           .attr('width', c)
            .attr('class', 'bar')
            .append('title')
-           .text(d => d)
+           .text(d => d);
+
+        const xAxis = d3.axisBottom(xScale);
+        const yAxis = d3.axisLeft(yScale);
+
+        svg.append('g')
+           .attr('id', 'x-axis')
+           .attr('transform', `translate(0, ${h - padding})`)
+           .call(xAxis);
+        
+        svg.append('g')
+           .attr('id', 'y-axis')
+           .attr('transform', `translate(${padding}, 0)`)
+           .call(yAxis);
       });
     </script>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
