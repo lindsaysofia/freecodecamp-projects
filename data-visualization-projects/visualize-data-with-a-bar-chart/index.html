@@ -3,6 +3,15 @@
   <head>
     <script src = "https://d3js.org/d3.v4.min.js"></script>
     <style>
+      body {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
       .bar {
         fill: rgb(43, 166, 149);
       }
@@ -47,10 +56,9 @@
            .attr('data-date', d => d[0])
            .attr('data-gdp', d => d[1])
            .attr('class', 'bar')
-           .append('title')
-           .attr('id', 'tooltip')
-           .attr('data-date', d => d)
-           .text(d => d);
+           .append('title');
+        
+        
 
         const xAxis = d3.axisBottom(xScale);
         const yAxis = d3.axisLeft(yScale);
@@ -64,6 +72,13 @@
            .attr('id', 'y-axis')
            .attr('transform', `translate(${padding}, 0)`)
            .call(yAxis);
+        
+        svg.on('mousemove', function() {
+          let coordinates = d3.mouse(this);
+          let date = xScale.invert(coordinates[0]);
+          let gdp = yScale.invert(coordinates[1]);
+          console.log(date, gdp);
+        });
       });
     </script>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
