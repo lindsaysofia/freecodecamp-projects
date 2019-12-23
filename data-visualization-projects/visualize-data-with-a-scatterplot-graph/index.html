@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scatterplot Graph</title>
+    <!-- Need the link below to use D3 -->
+    <script src = "https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-time.v1.min.js"></script>
+    <script src="https://d3js.org/d3-time-format.v2.min.js"></script>
+    <style>
+      body {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title">Doping in Professional Bicycle Racing</h1>
+    <h2>35 Fastest times up Alpe d'Huez</h2>
+    <script>
+      fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json')
+      .then(response => response.json())
+      .then(data => {
+        const w = 900;
+        const h = 600;
+        const padding = 60;
+        const radius = 5;
+
+        const yearFormat = d3.formatTime('%Y');
+        const minutesSecondsFormat = d3.formatTime('%M:%S');
+
+        const minX = d3.min(data, d => d.Year).toString();
+        const maxX = d3.max(data, d => d.Year).toString();
+        const minY = d3.min(data, d => d.Time);
+        const maxY = d3.max(data, d => d.Time);
+
+        const xScale = d3.scaleTime()
+                         .domain([new Date(yearFormat(minX)), new Date(yearFormat(maxX))])
+                         .range(padding, w - padding);
+
+        const yScale = d3.scaleTime()
+                         .domain([new Date(minY), new Date(maxY)])
+                         .range(h - padding, padding);
+        
+        const svg = d3.select('body')
+                      .append('svg')
+                      .attr('width', w)
+                      .attr('height', h);
+
+
+        svg.selectAll('circle')
+           .data(data)
+           .enter()
+           .append('circle')
+           .attr('cx', d => xScale(d.Year.toString()))
+           .attr('cy', d => yScale(d.Time))
+           .attr('r', radius);
+
+        const xAxis = d3.axisBottom(xScale);
+        const yAxis = d3.axisLeft(yScale);
+
+        svg.append('g')
+           .attr('id', 'x-axis')
+           .attr('transform', `translate(0, ${h - padding})`)
+           .call(xAxis);
+        
+        svg.append('g')
+           .attr('id', 'y-axis')
+           .attr('transform', `translate(${padding}, 0)`)
+           .call(yAxis);
+      });
+    </script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  </body>
+</html>
