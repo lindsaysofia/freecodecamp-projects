@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>Bar Chart</title>
     <script src = "https://d3js.org/d3.v4.min.js"></script>
     <style>
       body {
@@ -37,7 +38,7 @@
         const w = 900;
         const h = 600;
         const padding = 60;
-        const c = 2;
+        const barWidth = 2;
       
         const xScale = d3.scaleTime()
                          .domain([new Date('1947-01-01'), new Date('2015-07-01')])
@@ -78,7 +79,7 @@
             .attr('x', d => xScale(new Date(d[0])))
             .attr('y', d => yScale(d[1]))
             .attr('height', d => h - yScale(d[1]) - padding)
-            .attr('width', c)
+            .attr('width', barWidth)
             .attr('data-date', d => d[0])
             .attr('data-gdp', d => d[1])
             .attr('class', 'bar') 
