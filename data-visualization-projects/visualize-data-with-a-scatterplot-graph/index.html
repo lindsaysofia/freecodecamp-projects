@@ -27,22 +27,22 @@
         const w = 900;
         const h = 600;
         const padding = 60;
-        const radius = 5;
+        const radius = 15;
 
-        const yearFormat = d3.formatTime('%Y');
-        const minutesSecondsFormat = d3.formatTime('%M:%S');
+        const formatTime = d3.timeFormat('%M:%S') // takes date, returns string.
+        const parseTime = d3.timeParse('%M:%S'); // takes string, returns date.
 
-        const minX = d3.min(data, d => d.Year).toString();
-        const maxX = d3.max(data, d => d.Year).toString();
-        const minY = d3.min(data, d => d.Time);
-        const maxY = d3.max(data, d => d.Time);
+        const minX = d3.min(data, d => d.Year);
+        const maxX = d3.max(data, d => d.Year);
+        const minY = data[0].Time;
+        const maxY = data[data.length - 1].Time;
 
-        const xScale = d3.scaleTime()
-                         .domain([new Date(yearFormat(minX)), new Date(yearFormat(maxX))])
+        const xScale = d3.scaleLinear()
+                         .domain([minX, minY])
                          .range(padding, w - padding);
 
         const yScale = d3.scaleTime()
-                         .domain([new Date(minY), new Date(maxY)])
+                         .domain([parseTime(minY), parseTime(maxY)])
                          .range(h - padding, padding);
         
         const svg = d3.select('body')
@@ -55,8 +55,8 @@
            .data(data)
            .enter()
            .append('circle')
-           .attr('cx', d => xScale(d.Year.toString()))
-           .attr('cy', d => yScale(d.Time))
+           .attr('cx', d => xScale(d.Year))
+           .attr('cy', d => yScale(parseTime(d.Time)))
            .attr('r', radius);
 
         const xAxis = d3.axisBottom(xScale);
