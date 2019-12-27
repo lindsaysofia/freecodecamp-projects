@@ -61,8 +61,10 @@
            .attr('cy', d => yScale(parseTime(d.Time)))
            .attr('r', radius);
 
-        const xAxis = d3.axisBottom(xScale);
-        const yAxis = d3.axisLeft(yScale);
+        const xAxis = d3.axisBottom(xScale)
+                        .tickFormat(d => formatYear(d));
+        const yAxis = d3.axisLeft(yScale)
+                        .tickFormat(d => formatTime(d));
 
         svg.append('g')
            .attr('id', 'x-axis')
