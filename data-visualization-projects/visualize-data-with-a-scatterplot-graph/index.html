@@ -14,12 +14,42 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-color: black;
+        color: whitesmoke;
+      }
+
+      svg line,
+      svg path,
+      svg text,
+      svg {
+        stroke: whitesmoke;
+      }
+
+      .box::before {
+        content: '';
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        position: relative;
+        margin-right: 10px;
+      }
+
+      .green::before {
+        background-color: green;
+      }
+
+      .red::before {
+        background-color: red;
       }
     </style>
   </head>
   <body>
     <h1 id="title">Doping in Professional Bicycle Racing</h1>
     <h2>35 Fastest times up Alpe d'Huez</h2>
+    <div id="legend">
+      <div class ="box green">No Doping Allegations</div>
+      <div class ="box red">Riders with Doping Allegations</div>
+    </div>
     <script>
       fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json')
       .then(response => response.json())
@@ -59,7 +89,16 @@
            .append('circle')
            .attr('cx', d => xScale(parseYear(d.Year)))
            .attr('cy', d => yScale(parseTime(d.Time)))
-           .attr('r', radius);
+           .attr('r', radius)
+           .attr('class', 'dot')
+           .attr('data-xvalue', d => parseYear(d.Year))
+           .attr('data-yvalue', d => parseTime(d.Time))
+           .attr('stroke', d => {
+             return (d.Doping === '') ? 'green' : 'red';
+           })
+           .attr('fill', d => {
+             return (d.Doping === '') ? 'green' : 'red';
+           });
 
         const xAxis = d3.axisBottom(xScale)
                         .tickFormat(d => formatYear(d));
