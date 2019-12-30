@@ -41,6 +41,13 @@
       .red::before {
         background-color: red;
       }
+
+      #tooltip {
+        position: relative;
+        opacity: 0;
+        width: 200px;
+        height: 100px;
+      }
     </style>
   </head>
   <body>
@@ -56,7 +63,7 @@
       .then(data => {
         const w = 900;
         const h = 600;
-        const padding = 60;
+        const padding = 80;
         const radius = 3;
 
         const formatYear = d3.timeFormat('%Y'); // takes date, returns string.
@@ -81,6 +88,25 @@
                       .append('svg')
                       .attr('width', w)
                       .attr('height', h);
+        
+        let tooltip = d3.select('body')
+                        .append('div')
+                        .attr('id', 'tooltip');
+
+        let mouseover = function(d) {
+          tooltip.style('opacity', 1);
+        };
+
+        let mousemove = function(d) {
+          tooltip.text(`${d.Name} for ${d.Nationality} in year ${d.Year} with time ${d.Time}. ${d.Doping}`)
+                 .style('left', '0px')
+                 .style('top', '0px')
+                 .attr('data-year', parseYear(d.Year));
+        };
+
+        let mouseleave = function(d) {
+          tooltip.style('opacity', 0);
+        };
 
 
         svg.selectAll('circle')
@@ -98,7 +124,10 @@
            })
            .attr('fill', d => {
              return (d.Doping === '') ? 'green' : 'red';
-           });
+           })
+           .on("mouseover", mouseover)
+           .on("mousemove", mousemove)
+           .on("mouseleave", mouseleave);
 
         const xAxis = d3.axisBottom(xScale)
                         .tickFormat(d => formatYear(d));
@@ -116,6 +145,6 @@
            .call(yAxis);
       });
     </script>
-    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <!-- uncomment to see tests: <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script> -->
   </body>
 </html>
