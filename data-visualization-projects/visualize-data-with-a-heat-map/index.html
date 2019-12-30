@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heat Map</title>
+    <script src = "https://d3js.org/d3.v4.min.js"></script>
+    <style>
+      body {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title">Monthly Global Land-Surface Temperature</h1>
+    <h2 id="description">1753 - 2015: base temperature 8.66℃</h2>
+    <script>
+      fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json')
+      .then(response => response.json())
+      .then(data => {
+        const w = 1050;
+        const h = 600;
+        const padding = 60;
+        const barWidth = 3;
+
+        const formatYear = d3.timeFormat('%Y'); // takes date, returns string.
+        const parseYear = d3.timeParse('%Y'); // takes string, returns date.
+        const formatMonth = d3.timeFormat('%B'); // takes date, returns string.
+        const parseMonth = d3.timeParse('%B'); // takes string, returns date.
+
+        const xScale = d3.scaleTime()
+                         .domain([parseYear(1750), parseYear(2020)])
+                         .range([padding, w + padding]);
+        
+        const yScale = d3.scaleTime()
+                         .domain([parseMonth(1), parseMonth(12)])
+                         .range([padding, h - padding]);
+        
+        const svg = d3.select('body')
+                      .append('svg')
+                      .attr('width', w)
+                      .attr('height', h);
+
+       const tooltip = d3.select('body')
+                         .append('div')
+                         .attr('id', 'tooltip');
+        
+        let mouseover = function(d) {
+          tooltip.style('opacity', 1);
+        }
+
+        let mousemove = function(d) {
+          tooltip.text(`${d.year} - ${d.month}`)
+                 .style('left', '0px')
+                 .style('top', '0px')
+                 .attr('data-year', parseYear(d.year));
+        };
+
+        let mouseleave = function(d) {
+          tooltip.style('opacity', 0);
+        };
+
+        svg.selectAll('rect')
+           .data(data)
+           .enter()
+           .append('rect')
+           .attr('x', d => parseYear(d.year))
+           .attr('y', d => parseMonth(d.month))
+           .on("mouseover", mouseover)
+           .on("mousemove", mousemove)
+           .on("mouseleave", mouseleave);
+
+        const xAxis = d3.axisBottom(xScale)
+                        .tickFormat(d => formatYear(d));
+        const yAxis = d3.axisLeft(yScale)
+                        .tickFormat(d => formatMonth(d));
+
+        svg.append('g')
+           .attr('id', 'x-axis')
+           .attr('transform', `translate(0, ${h - padding})`)
+           .call(xAxis);
+        
+        svg.append('g')
+           .attr('id', 'y-axis')
+           .attr('transform', `translate(${padding}, 0)`)
+           .call(yAxis);
+      });
+    </script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  </body>
+</html>
