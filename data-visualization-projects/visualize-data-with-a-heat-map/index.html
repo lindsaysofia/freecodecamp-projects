@@ -12,12 +12,19 @@
         justify-content: center;
         align-items: center;
       }
+
+      rect {
+        height: 50px;
+        width: 50px;
+        background-color: teal;
+      }
     </style>
   </head>
   <body>
     <h1 id="title">Monthly Global Land-Surface Temperature</h1>
     <h2 id="description">1753 - 2015: base temperature 8.66℃</h2>
     <script>
+      const MONTHS = {'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June', '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December'}
       fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json')
       .then(response => response.json())
       .then(data => {
@@ -25,6 +32,8 @@
         const h = 600;
         const padding = 60;
         const barWidth = 3;
+        const baseTemperature = data.baseTemperature;
+        const dataset = data.monthlyVariance;
 
         const formatYear = d3.timeFormat('%Y'); // takes date, returns string.
         const parseYear = d3.timeParse('%Y'); // takes string, returns date.
@@ -32,11 +41,11 @@
         const parseMonth = d3.timeParse('%B'); // takes string, returns date.
 
         const xScale = d3.scaleTime()
-                         .domain([parseYear(1750), parseYear(2020)])
+                         .domain([parseYear('1750'), parseYear('2020')])
                          .range([padding, w + padding]);
         
         const yScale = d3.scaleTime()
-                         .domain([parseMonth(1), parseMonth(12)])
+                         .domain([parseMonth('January'), parseMonth('December')])
                          .range([padding, h - padding]);
         
         const svg = d3.select('body')
@@ -53,7 +62,7 @@
         }
 
         let mousemove = function(d) {
-          tooltip.text(`${d.year} - ${d.month}`)
+          tooltip.text(`${d.year} - ${MONTHS[d.month]}`)
                  .style('left', '0px')
                  .style('top', '0px')
                  .attr('data-year', parseYear(d.year));
@@ -64,11 +73,15 @@
         };
 
         svg.selectAll('rect')
-           .data(data)
+           .data(dataset)
            .enter()
            .append('rect')
            .attr('x', d => parseYear(d.year))
-           .attr('y', d => parseMonth(d.month))
+           .attr('y', d => parseMonth(MONTHS[d.month]))
+           .attr('class', 'cell')
+           .attr('data-month', d => parseMonth(MONTHS[d.month]))
+           .attr('data-year', d => parseYear(d.year))
+           .attr('data-temp', d => baseTemperature + d.variance)
            .on("mouseover", mouseover)
            .on("mousemove", mousemove)
            .on("mouseleave", mouseleave);
