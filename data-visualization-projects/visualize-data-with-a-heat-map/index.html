@@ -23,21 +23,18 @@
       fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json')
       .then(response => response.json())
       .then(data => {
-        const w = 1150;
-        const h = 600;
-        const padding = 60;
-        const barWidth = 3;
+        const w = 1200;
+        const h = 400;
+        const padding = 0;
         const baseTemperature = data.baseTemperature;
         const dataset = data.monthlyVariance;
-        const years = [];
-        for (let year = 1760; year <= 2010; year += 10) {
-          years.push(year);
-        }
 
-        const xScale = d3.scaleBand()
-                         .domain(years)
-                         .range([padding, w + padding])
-                         .padding(1);
+        const formatYear = d3.timeFormat('%Y'); // takes date, returns string
+        const parseYear = d3.timeParse('%Y'); // takes string, returns date.
+
+        const xScale = d3.scaleTime()
+                         .domain([parseYear('1753'), parseYear('2016')])
+                         .range([padding, w + padding]);
         
         const yScale = d3.scaleBand()
                          .domain(Object.values(MONTHS))
@@ -60,7 +57,7 @@
           tooltip.text(`${d.year} - ${MONTHS[d.month]}`)
                  .style('left', '0px')
                  .style('top', '0px')
-                 .attr('data-year', d.year);
+                 .attr('data-year', parseYear(d.year));
         };
 
         let mouseleave = function(d) {
@@ -71,20 +68,21 @@
            .data(dataset)
            .enter()
            .append('rect')
-           .attr('x', d => xScale(d.year))
+           .attr('x', d => xScale(parseYear(d.year)))
            .attr('y', d => yScale(MONTHS[d.month]))
-           .attr('width', 20)
-           .attr('height', 20)
+           .attr('width', 4)
+           .attr('height', yScale.bandwidth())
            .style('fill', d => d.variance > 0 ? 'red' : 'blue')
            .attr('class', 'cell')
+           .attr('data-year', d => parseYear(d.year))
            .attr('data-month', d => MONTHS[d.month])
-           .attr('data-year', d => d.year)
            .attr('data-temp', d => baseTemperature + d.variance)
            .on("mouseover", mouseover)
            .on("mousemove", mousemove)
            .on("mouseleave", mouseleave);
 
-        const xAxis = d3.axisBottom(xScale);
+        const xAxis = d3.axisBottom(xScale)
+                        .tickFormat(d => formatYear(d));
         const yAxis = d3.axisLeft(yScale);
 
         svg.append('g')
