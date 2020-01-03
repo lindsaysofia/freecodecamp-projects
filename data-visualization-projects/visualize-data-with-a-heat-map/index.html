@@ -13,11 +13,6 @@
         align-items: center;
       }
 
-      rect {
-        height: 50px;
-        width: 50px;
-        background-color: teal;
-      }
     </style>
   </head>
   <body>
@@ -28,24 +23,24 @@
       fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json')
       .then(response => response.json())
       .then(data => {
-        const w = 1050;
+        const w = 1150;
         const h = 600;
         const padding = 60;
         const barWidth = 3;
         const baseTemperature = data.baseTemperature;
         const dataset = data.monthlyVariance;
+        const years = [];
+        for (let year = 1760; year <= 2010; year += 10) {
+          years.push(year);
+        }
 
-        const formatYear = d3.timeFormat('%Y'); // takes date, returns string.
-        const parseYear = d3.timeParse('%Y'); // takes string, returns date.
-        const formatMonth = d3.timeFormat('%B'); // takes date, returns string.
-        const parseMonth = d3.timeParse('%B'); // takes string, returns date.
-
-        const xScale = d3.scaleTime()
-                         .domain([parseYear('1750'), parseYear('2020')])
-                         .range([padding, w + padding]);
+        const xScale = d3.scaleBand()
+                         .domain(years)
+                         .range([padding, w + padding])
+                         .padding(1);
         
-        const yScale = d3.scaleTime()
-                         .domain([parseMonth('January'), parseMonth('December')])
+        const yScale = d3.scaleBand()
+                         .domain(Object.values(MONTHS))
                          .range([padding, h - padding]);
         
         const svg = d3.select('body')
@@ -65,7 +60,7 @@
           tooltip.text(`${d.year} - ${MONTHS[d.month]}`)
                  .style('left', '0px')
                  .style('top', '0px')
-                 .attr('data-year', parseYear(d.year));
+                 .attr('data-year', d.year);
         };
 
         let mouseleave = function(d) {
@@ -76,20 +71,21 @@
            .data(dataset)
            .enter()
            .append('rect')
-           .attr('x', d => parseYear(d.year))
-           .attr('y', d => parseMonth(MONTHS[d.month]))
+           .attr('x', d => xScale(d.year))
+           .attr('y', d => yScale(MONTHS[d.month]))
+           .attr('width', 20)
+           .attr('height', 20)
+           .style('fill', d => d.variance > 0 ? 'red' : 'blue')
            .attr('class', 'cell')
-           .attr('data-month', d => parseMonth(MONTHS[d.month]))
-           .attr('data-year', d => parseYear(d.year))
+           .attr('data-month', d => MONTHS[d.month])
+           .attr('data-year', d => d.year)
            .attr('data-temp', d => baseTemperature + d.variance)
            .on("mouseover", mouseover)
            .on("mousemove", mousemove)
            .on("mouseleave", mouseleave);
 
-        const xAxis = d3.axisBottom(xScale)
-                        .tickFormat(d => formatYear(d));
-        const yAxis = d3.axisLeft(yScale)
-                        .tickFormat(d => formatMonth(d));
+        const xAxis = d3.axisBottom(xScale);
+        const yAxis = d3.axisLeft(yScale);
 
         svg.append('g')
            .attr('id', 'x-axis')
