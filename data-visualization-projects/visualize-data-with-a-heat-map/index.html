@@ -23,9 +23,9 @@
       fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json')
       .then(response => response.json())
       .then(data => {
-        const w = 1200;
+        const w = 1350;
         const h = 400;
-        const padding = 0;
+        const padding = 60;
         const baseTemperature = data.baseTemperature;
         const dataset = data.monthlyVariance;
 
@@ -33,8 +33,8 @@
         const parseYear = d3.timeParse('%Y'); // takes string, returns date.
 
         const xScale = d3.scaleTime()
-                         .domain([parseYear('1753'), parseYear('2016')])
-                         .range([padding, w + padding]);
+                         .domain([parseYear('1753'), parseYear('2015')])
+                         .range([padding, w - padding]);
         
         const yScale = d3.scaleBand()
                          .domain(Object.values(MONTHS))
@@ -72,11 +72,11 @@
            .attr('y', d => yScale(MONTHS[d.month]))
            .attr('width', 4)
            .attr('height', yScale.bandwidth())
-           .style('fill', d => d.variance > 0 ? 'red' : 'blue')
            .attr('class', 'cell')
-           .attr('data-year', d => parseYear(d.year))
-           .attr('data-month', d => MONTHS[d.month])
+           .attr('data-year', d => d.year)
+           .attr('data-month', d => d.month)
            .attr('data-temp', d => baseTemperature + d.variance)
+           .style('fill', d => d.variance > 0 ? 'red' : 'blue')
            .on("mouseover", mouseover)
            .on("mousemove", mousemove)
            .on("mouseleave", mouseleave);
