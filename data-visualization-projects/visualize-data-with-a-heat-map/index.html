@@ -13,10 +13,11 @@
         align-items: center;
       }
 
-      rect {
-        height: 50px;
-        width: 50px;
-        background-color: teal;
+      #legend {
+        margin: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     </style>
   </head>
@@ -25,27 +26,36 @@
     <h2 id="description">1753 - 2015: base temperature 8.66℃</h2>
     <script>
       const MONTHS = {'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June', '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December'}
+      const DARK_BLUE = '#1c70e6';
+      const LIGHT_BLUE = '#6aa5f7';
+      const YELLOW = '#fffca1';
+      const ORANGE = '#fc9c1e';
+      const RED = '#ff4545';
+      const COLORS = {'3.9': DARK_BLUE, '6.1': LIGHT_BLUE, '8.3': YELLOW, '10.6': ORANGE, '12.8': RED};
       fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json')
       .then(response => response.json())
       .then(data => {
-        const w = 1050;
-        const h = 600;
+        const w = 1450;
+        const h = 400;
+        const barWidth = 5;
         const padding = 60;
-        const barWidth = 3;
         const baseTemperature = data.baseTemperature;
         const dataset = data.monthlyVariance;
 
-        const formatYear = d3.timeFormat('%Y'); // takes date, returns string.
+        const wLegend = 500;
+        const hLegend = 100;
+        const rectWidthLegend = 50;
+        const datasetLegend = [3.9, 6.1, 8.3, 10.6, 12.8];
+
+        const formatYear = d3.timeFormat('%Y'); // takes date, returns string
         const parseYear = d3.timeParse('%Y'); // takes string, returns date.
-        const formatMonth = d3.timeFormat('%B'); // takes date, returns string.
-        const parseMonth = d3.timeParse('%B'); // takes string, returns date.
 
         const xScale = d3.scaleTime()
-                         .domain([parseYear('1750'), parseYear('2020')])
-                         .range([padding, w + padding]);
+                         .domain([parseYear('1753'), parseYear('2015')])
+                         .range([padding, w - padding]);
         
-        const yScale = d3.scaleTime()
-                         .domain([parseMonth('January'), parseMonth('December')])
+        const yScale = d3.scaleBand()
+                         .domain(Object.values(MONTHS))
                          .range([padding, h - padding]);
         
         const svg = d3.select('body')
@@ -62,10 +72,10 @@
         }
 
         let mousemove = function(d) {
-          tooltip.text(`${d.year} - ${MONTHS[d.month]}`)
+          tooltip.text(`${d.year} - ${MONTHS[d.month]} Temp: ${(baseTemperature + d.variance).toFixed(1)}℃ Variance: ${d.variance.toFixed(1)}℃`)
                  .style('left', '0px')
                  .style('top', '0px')
-                 .attr('data-year', parseYear(d.year));
+                 .attr('data-year', d.year);
         };
 
         let mouseleave = function(d) {
@@ -76,20 +86,28 @@
            .data(dataset)
            .enter()
            .append('rect')
-           .attr('x', d => parseYear(d.year))
-           .attr('y', d => parseMonth(MONTHS[d.month]))
+           .attr('x', d => xScale(parseYear(d.year)))
+           .attr('y', d => yScale(MONTHS[d.month]))
+           .attr('width', barWidth)
+           .attr('height', yScale.bandwidth())
            .attr('class', 'cell')
-           .attr('data-month', d => parseMonth(MONTHS[d.month]))
-           .attr('data-year', d => parseYear(d.year))
+           .attr('data-year', d => d.year)
+           .attr('data-month', d => d.month - 1)
            .attr('data-temp', d => baseTemperature + d.variance)
+           .style('fill', d => {
+             let temperature = baseTemperature + d.variance;
+             for (let i = 0; i < datasetLegend.length; i++)
+              if (temperature < datasetLegend[i] || i === datasetLegend.length - 1) {
+                return COLORS[datasetLegend[i]];
+              }
+           })
            .on("mouseover", mouseover)
            .on("mousemove", mousemove)
            .on("mouseleave", mouseleave);
 
         const xAxis = d3.axisBottom(xScale)
                         .tickFormat(d => formatYear(d));
-        const yAxis = d3.axisLeft(yScale)
-                        .tickFormat(d => formatMonth(d));
+        const yAxis = d3.axisLeft(yScale);
 
         svg.append('g')
            .attr('id', 'x-axis')
@@ -100,8 +118,33 @@
            .attr('id', 'y-axis')
            .attr('transform', `translate(${padding}, 0)`)
            .call(yAxis);
+
+        const legend = d3.select('body')
+                        .append('svg')
+                        .attr('id', 'legend')
+                        .attr('width', wLegend)
+                        .attr('height', hLegend);
+
+        legend.selectAll('rect')
+              .data(datasetLegend)
+              .enter()
+              .append('rect')
+              .attr('width', rectWidthLegend)
+              .attr('height', rectWidthLegend)
+              .attr('x', (d, i) => rectWidthLegend * 2 * i)
+              .style('fill', d => COLORS[d]);
+        
+        legend.selectAll('text')
+              .data(datasetLegend)
+              .enter()
+              .append('text')
+              .text((d, i) => (i === datasetLegend.length - 1) ? `>=${d}` : `<=${d}`)
+              .attr('x', (d, i) => rectWidthLegend * 2 * i)
+              .attr('y', rectWidthLegend / 2)
+
+             
       });
     </script>
-    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <!-- uncomment to view tests: <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script> -->
   </body>
 </html>
