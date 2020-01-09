@@ -18,7 +18,30 @@
   <body>
     <h1 id="title">United States Educational Attainment</h1>
     <h2 id="description">Percentage of adults age 25 and older with a bachelor's degree or higher (2010-2014)</h2>
-    <script></script>
+    <script>
+      const educationData;
+      const countyData;
+      fetch('https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json')
+      .then(response => response.json())
+      .then(data => {
+        educationData = data;
+      });
+
+      fetch('https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json')
+      .then(response => response.json())
+      .then(data => {
+        countyData = data;
+      });
+
+      const w = 900;
+      const h = 600;
+      const padding = 60;
+
+      const svg = d3.select('body')
+                    .append('svg')
+                    .attr('width', w)
+                    .attr('height', h);
+    </script>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
   </body>
 </html>
