@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Choropleth Map</title>
+    <script src = "https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <style>
+      body {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: black;
+      }
+
+      #legend {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title">United States Educational Attainment</h1>
+    <h2 id="description">Percentage of adults age 25 and older with a bachelor's degree or higher (2010-2014)</h2>
+    <script>
+      const w = 1000;
+      const h = 1500;
+
+      Promise.all([
+      fetch('https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json').then(response => response.json()),
+      fetch('https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json').then(response => response.json())
+      ])
+      .then(data => {
+        const countyData = data[0];
+        const educationData = data[1];
+
+        const wLegend = 900;
+        const hLegend = 100;
+        const rectWidthLegend = 50;
+        const legendDataset = [3, 12, 21, 30, 39, 48, 57, 66];
+
+        const COLORS = {'3': '#f0e6fc', '12': '#dec2ff', '21': '#cea3ff', '30': '#b078ff', '39': '#9e59ff', '48': '#6b03fc' , '57': '#1c23e8', '66': '#0738b3'};
+
+        const tooltip = d3.select('body')
+                         .append('div')
+                         .attr('id', 'tooltip');
+        
+        let mouseover = function(d) {
+          tooltip.style('opacity', 1);
+        }
+
+        let mousemove = function(d) {
+          let countyObj = educationData.find(educationObj => educationObj.fips === d.id);
+          if (countyObj === undefined) {
+            countyObj = {'area_name': '', 'state': '', 'bachelorsOrHigher': ''}
+          }
+          tooltip.text(`${countyObj.area_name}, ${countyObj.state}: ${countyObj.bachelorsOrHigher}%`)
+                 .style('left', '0px')
+                 .style('top', '0px')
+                 .attr('data-education', countyObj.bachelorsOrHigher);
+        };
+
+        let mouseleave = function(d) {
+          tooltip.style('opacity', 0);
+        };
+
+        const legend = d3.select('body')
+                         .append('svg')
+                         .attr('id', 'legend')
+                         .attr('width', wLegend)
+                         .attr('height', hLegend);
+
+        legend.selectAll('rect')
+              .data(legendDataset)
+              .enter()
+              .append('rect')
+              .attr('width', rectWidthLegend)
+              .attr('height', rectWidthLegend)
+              .attr('x', (d, i) => rectWidthLegend * 2 * i)
+              .style('fill', d => COLORS[d]);
+        
+        legend.selectAll('text')
+              .data(legendDataset)
+              .enter()
+              .append('text')
+              .text((d, i) => (i === legendDataset.length - 1) ? `>=${d}` : `<=${d}`)
+              .style('fill', 'white')
+              .style('text-shadow', '5px 5px 10px black')
+              .attr('x', (d, i) => rectWidthLegend * 2 * i)
+              .attr('y', rectWidthLegend / 2);
+
+        const svg = d3.select('body')
+                    .append('svg')
+                    .attr('width', w)
+                    .attr('height', h);
+        
+        svg.selectAll('path')
+           .data(topojson.feature(countyData, countyData.objects.counties).features)
+           .enter()
+           .append('path')
+           .attr('d', d3.geoPath())
+           .attr('class', 'county')
+           .attr('data-fips', d => d.id)
+           .attr('data-education', d => {
+            let countyObj = educationData.find(educationObj => educationObj.fips === d.id);
+            return (countyObj === undefined) ? 0 : countyObj.bachelorsOrHigher;
+           })
+           .style('fill', d => {
+            let countyObj = educationData.find(educationObj => educationObj.fips === d.id);
+            if (countyObj === undefined) return COLORS[0];
+            for (let i = 0; i < legendDataset.length; i++)
+              if (countyObj.bachelorsOrHigher < legendDataset[i] || i === legendDataset.length - 1) {
+                return COLORS[legendDataset[i]];
+              }
+           })
+           .on("mouseover", mouseover)
+           .on("mousemove", mousemove)
+           .on("mouseleave", mouseleave);           
+      });
+    </script>
+    <!-- uncomment to see tests: <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script> -->
+  </body>
+</html>
