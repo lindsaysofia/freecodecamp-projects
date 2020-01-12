@@ -9,6 +9,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        color: white;
+        background-color: black;
       }
     </style>
   </head>
@@ -116,9 +118,9 @@
                   return rectWidthLegend * 2.5;
                 }
                 return rectWidthLegend;
-              })
-              .style('fill', (d, i) => (i >= 9) ? 'black' : 'white')
-              .style('text-shadow', (d, i) => (i >= 9) ? '5px 5px 10px white': '5px 5px 10px black');
+              })  
+              .style('fill', 'white')
+              .style('text-shadow', '5px 5px 10px black');
 
         const svg = d3.select('body')
                       .append('svg')
@@ -153,10 +155,12 @@
            .data(root.leaves())
            .enter()
            .append('text')
-           .attr('x', d => d.x0)
-           .attr('y', d => d.y0)
-           .text(d => d.data.name)
-           .style('font-size', '15px')
+           .attr('x', d => d.x0 + 5)
+           .attr('y', d => d.y0 + 10)
+           .text(d => d.data.category)
+           .style('font-size', '10px')
+           .style('fill', 'white')
+           .style('text-shadow', '5px 5px 10px black');
       });
     </script>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
