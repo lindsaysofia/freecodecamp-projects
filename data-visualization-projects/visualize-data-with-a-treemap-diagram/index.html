@@ -17,7 +17,110 @@
   <body>
     <h1 id="title">Video Game Sales</h1>
     <h2 id="description">Top 100 Most Sold Video Games Grouped by Platform</h2>
-    <script></script>
+    <script>
+      // Generates a random number between 50 and 200, inclusive. Using this later to generate a random color.
+      function generateRandomNumber() {
+        let max = 200;
+        let min = 10;
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      }
+
+      fetch('https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/video-game-sales-data.json')
+      .then(response => response.json())
+      .then(data => {
+        const w = 900;
+        const h = 600;
+        const padding = 60;
+
+        const wLegend = 900;
+        const hLegend = 300;
+        const rectWidthLegend = 40;
+        const platforms = data.children.map(child => child.name);
+
+        const colors = (function() {
+          let colorsObj = {};
+          for (let i = 0; i < platforms.length; i++) {
+            let platform = platforms[i];
+            let platformColor = `rgb(${generateRandomNumber()}, ${generateRandomNumber()}, ${generateRandomNumber()})`;
+            while (Object.values(colorsObj).includes(platformColor)) {
+              platformColor = `rgb(${generateRandomNumber()}, ${generateRandomNumber()}, ${generateRandomNumber()})`;
+            }
+            colorsObj[platform] = platformColor;
+          }
+          return colorsObj;
+        })();
+
+        const tooltip = d3.select('body')
+                          .append('div')
+                          .attr('id', 'tooltip');
+
+        let mouseover = function(d) {
+          tooltip.style('opacity', 1);
+        }
+
+        let mousemove = function(d) {
+          tooltip.text(`Name: , Category: , Value: `)
+                 .style('left', '0px')
+                 .style('top', '0px')
+                 .attr('data-value', '')
+        }
+
+        let mouseleave = function(d) {
+          tooltip.style('opacity', 0)
+        }
+
+        const legend = d3.select('body')
+                         .append('svg')
+                         .attr('id', 'legend')
+                         .attr('width', wLegend)
+                         .attr('height', hLegend);
+        
+        legend.selectAll('rect')
+              .data(platforms)
+              .enter()
+              .append('rect')
+              .attr('width', rectWidthLegend)
+              .attr('height', rectWidthLegend)
+              .attr('x', (d, i) => {
+                if (i >= platforms.length / 2) {
+                  return (rectWidthLegend * 3 * (i - 9)) + padding;
+                }
+                return (rectWidthLegend * 3 * i) + padding;
+              })
+              .attr('y', (d, i) => {
+                if (i >= platforms.length / 2) {
+                  return rectWidthLegend * 2;
+                }
+                return rectWidthLegend / 2;
+              })
+              .style('fill', d => colors[d]);
+
+        legend.selectAll('text')
+              .data(platforms)
+              .enter()
+              .append('text')
+              .text(d => d)
+              .attr('x', (d, i) => {
+                if (i >= platforms.length / 2) {
+                  return (rectWidthLegend * 3 * (i - 9)) + padding;
+                }
+                return (rectWidthLegend * 3 * i) + padding;
+              })
+              .attr('y', (d, i) => {
+                if (i >= platforms.length / 2) {
+                  return rectWidthLegend * 2.5;
+                }
+                return rectWidthLegend;
+              })
+              .style('fill', 'white')
+              .style('text-shadow', '5px 5px 10px black');
+
+        const svg = d3.select('body')
+                      .append('svg')
+                      .attr('width', w)
+                      .attr('height', h);
+      });
+    </script>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
   </body>
 </html>
