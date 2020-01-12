@@ -5,8 +5,6 @@
     <script src = "https://d3js.org/d3.v4.min.js"></script>
     <style>
       body {
-        height: 100vh;
-        width: 100vw;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -18,32 +16,38 @@
     <h1 id="title">Video Game Sales</h1>
     <h2 id="description">Top 100 Most Sold Video Games Grouped by Platform</h2>
     <script>
-      // Generates a random number between 50 and 200, inclusive. Using this later to generate a random color.
-      function generateRandomNumber() {
-        let max = 200;
-        let min = 10;
-        return Math.floor(Math.random() * (max - min + 1) + min);
-      }
-
       fetch('https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/video-game-sales-data.json')
       .then(response => response.json())
       .then(data => {
         const w = 900;
-        const h = 600;
+        const h = 900;
         const padding = 60;
 
-        const wLegend = 900;
-        const hLegend = 300;
+        const wLegend = 1200;
+        const hLegend = 150;
         const rectWidthLegend = 40;
         const platforms = data.children.map(child => child.name);
 
         const colors = (function() {
           let colorsObj = {};
-          for (let i = 0; i < platforms.length; i++) {
+          for (let i = 0; i < platforms.length / 2; i++) {
             let platform = platforms[i];
-            let platformColor = `rgb(${generateRandomNumber()}, ${generateRandomNumber()}, ${generateRandomNumber()})`;
-            while (Object.values(colorsObj).includes(platformColor)) {
-              platformColor = `rgb(${generateRandomNumber()}, ${generateRandomNumber()}, ${generateRandomNumber()})`;
+            let platformColor;
+            if (i >= 4) {
+              platformColor = `hsl(${(30 * i) + 60}, 64%, 45%)`;
+            } else {
+              platformColor = `hsl(${30 * i}, 64%, 45%)`
+            }
+            colorsObj[platform] = platformColor;
+          }
+          for (let i = platforms.length / 2; i < platforms.length; i++) {
+            let platform = platforms[i];
+            let platformColor;
+            let match = i - 9;
+            if (match >= 4) {
+              platformColor = `hsl(${(30 * match) + 60}, 64%, 70%)`;
+            } else {
+              platformColor = `hsl(${30 * match}, 64%, 70%)`
             }
             colorsObj[platform] = platformColor;
           }
@@ -59,10 +63,10 @@
         }
 
         let mousemove = function(d) {
-          tooltip.text(`Name: , Category: , Value: `)
+          tooltip.text(`Name: ${d.data.name}, Category: ${d.data.category}, Value: ${d.data.value}`)
                  .style('left', '0px')
                  .style('top', '0px')
-                 .attr('data-value', '')
+                 .attr('data-value', d.data.value)
         }
 
         let mouseleave = function(d) {
@@ -81,6 +85,7 @@
               .append('rect')
               .attr('width', rectWidthLegend)
               .attr('height', rectWidthLegend)
+              .attr('class', 'legend-item')
               .attr('x', (d, i) => {
                 if (i >= platforms.length / 2) {
                   return (rectWidthLegend * 3 * (i - 9)) + padding;
@@ -112,15 +117,49 @@
                 }
                 return rectWidthLegend;
               })
-              .style('fill', 'white')
-              .style('text-shadow', '5px 5px 10px black');
+              .style('fill', (d, i) => (i >= 9) ? 'black' : 'white')
+              .style('text-shadow', (d, i) => (i >= 9) ? '5px 5px 10px white': '5px 5px 10px black');
 
         const svg = d3.select('body')
                       .append('svg')
                       .attr('width', w)
                       .attr('height', h);
+        
+        const root = d3.hierarchy(data).sum(d => d.value);
+
+        d3.treemap()
+          .size([w - 200, h - 200])
+          .padding(1)
+          (root)
+
+        svg.selectAll('rect')
+           .data(root.leaves())
+           .enter()
+           .append('rect')
+           .attr('x', d => d.x0)
+           .attr('y', d => d.y0)
+           .attr('width', d => d.x1 - d.x0)
+           .attr('height', d => d.y1 - d.y0)
+           .attr('class', 'tile')
+           .attr('data-name', d => d.data.name)
+           .attr('data-category', d => d.data.category)
+           .attr('data-value', d => d.data.value)
+           .style('fill', d => colors[d.data.category])
+           .on("mouseover", mouseover)
+           .on("mousemove", mousemove)
+           .on("mouseleave", mouseleave);
+
+        svg.selectAll('text')
+           .data(root.leaves())
+           .enter()
+           .append('text')
+           .attr('x', d => d.x0)
+           .attr('y', d => d.y0)
+           .text(d => d.data.name)
+           .style('font-size', '15px')
       });
     </script>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <!-- Helped me: https://www.d3-graph-gallery.com/graph/treemap_json.html -->
   </body>
 </html>
